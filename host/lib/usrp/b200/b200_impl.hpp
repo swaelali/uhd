@@ -297,6 +297,10 @@ private:
     //! Coercer, attached to the "rate/value" property on the tx dsps.
     double coerce_tx_samp_rate(tx_dsp_core_3000::sptr, size_t, const double);
     void update_tx_samp_rate(const size_t, const double);
+
+    //! Coercer, attached to the "user/regs" property.
+    void coerce_user_reg1(uint32_t value);
+    void coerce_user_reg2(uint32_t value);
 };
 
 #endif /* INCLUDED_B200_IMPL_HPP */

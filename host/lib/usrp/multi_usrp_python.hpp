@@ -241,6 +241,10 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_get_mboard_sensor_names, get_mbo
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_set_user_register, set_user_register, 2, 3);
 
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_set_user_register1, set_user_register1, 1, 2);
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_set_user_register2, set_user_register2, 1, 2);
+
+
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_set_rx_subdev_spec, set_rx_subdev_spec, 1, 2);
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_get_rx_subdev_spec, get_rx_subdev_spec, 0, 1);
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(overload_get_rx_subdev_name, get_rx_subdev_name, 0, 1);

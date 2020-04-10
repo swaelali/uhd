@@ -572,6 +572,9 @@ public:
     virtual void set_user_register(
         const uint8_t addr, const uint32_t data, size_t mboard = ALL_MBOARDS) = 0;
 
+    virtual void set_user_register1(const uint32_t data, size_t mboard = ALL_MBOARDS) = 0;
+    virtual void set_user_register2(const uint32_t data, size_t mboard = ALL_MBOARDS) = 0;
+
     /*! Return a user settings interface object
      *
      * This is only supported by some USRPs (B2xx series, N230). It will return

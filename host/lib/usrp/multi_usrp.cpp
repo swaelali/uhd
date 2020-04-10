@@ -976,6 +976,27 @@ public:
         }
     }
 
+    // modified (handle user register) __________________________________
+    void set_user_register1(const uint32_t data, size_t mboard){
+          if (mboard != ALL_MBOARDS){
+                _tree->access<uint32_t>(mb_root(mboard) / "user/reg1").set(data);
+              return;
+          }
+          for (size_t m = 0; m < get_num_mboards(); m++){
+              set_user_register1(data, m);
+          }
+      }
+
+    void set_user_register2(const uint32_t data, size_t mboard){
+          if (mboard != ALL_MBOARDS){
+                _tree->access<uint32_t>(mb_root(mboard) / "user/reg2").set(data);
+              return;
+          }
+          for (size_t m = 0; m < get_num_mboards(); m++){
+              set_user_register2(data, m);
+          }
+      }
+
     wb_iface::sptr get_user_settings_iface(const size_t chan)
     {
         const auto user_settings_path =

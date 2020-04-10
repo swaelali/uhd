@@ -26,6 +26,7 @@
 #include <ctime>
 #include <cmath>
 #include <chrono>
+#include <inttypes.h>
 
 #include "../../transport/libusb1_base.hpp"
 
@@ -270,6 +271,21 @@ UHD_STATIC_BLOCK(register_b200_device)
     device::register_device(&b200_find, &b200_make, device::USRP);
 }
 
+void b200_impl::coerce_user_reg1(uint32_t value)
+{
+    radio_perifs_t radio = _radio_perifs[0];
+    printf("\nSR_TEST coerced with value: %" PRIu32 "\n", uint32_t(value));
+    radio.ctrl->poke32(TOREG(SR_TEST), uint32_t(value));
+}
+
+void b200_impl::coerce_user_reg2(uint32_t value)
+{
+    radio_perifs_t radio = _radio_perifs[0];
+    printf("\nSR_USER_SR_BASE coerced with value: %" PRIu32 "\n", uint32_t(value));
+    radio.ctrl->poke32(TOREG(SR_USER_SR_BASE), uint32_t(value));
+}
+
+
 /***********************************************************************
  * Structors
  **********************************************************************/
@@ -359,6 +375,20 @@ b200_impl::b200_impl(const uhd::device_addr_t& device_addr, usb_device_handle::s
     _tree->create<mboard_eeprom_t>(mb_path / "eeprom")
         .set(mb_eeprom)
         .add_coerced_subscriber(boost::bind(&b200_impl::set_mb_eeprom, this, _1));
+
+    ///////////////////////////////////////////////////////////////////
+    // Adding user_reg to property tree
+    // /////////////////////////////////////////////////////////////////
+    typedef std::pair<boost::uint8_t, boost::uint32_t> user_reg_t;
+    _tree->create<std::string>(mb_path / "user");
+    _tree->create<uint32_t>(mb_path / "user" / "reg1")
+          .set(6)
+          .add_coerced_subscriber(boost::bind(&b200_impl::coerce_user_reg1, this, _1));
+  
+    _tree->create<uint32_t>(mb_path / "user" / "reg2")
+          .set(6)
+          .add_coerced_subscriber(boost::bind(&b200_impl::coerce_user_reg2, this, _1));
+
 
     ////////////////////////////////////////////////////////////////////
     // Identify the device type
